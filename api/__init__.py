@@ -113,7 +113,3 @@ def help_in_use():
             },
         ).json()[0]["datapoints"]
     )
-
-
-if __name__ == "__main__":
-    app.run()

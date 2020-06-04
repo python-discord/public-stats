@@ -19,3 +19,5 @@ The flask backend can be started with `python -m api`.
 ### Building
 
 To build the HTML files for production use `yarn build`.
+
+**You must build the HTML before the Docker image, the HTML must be inside the Docker image so Flask can serve it.**
