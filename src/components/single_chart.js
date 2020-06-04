@@ -11,7 +11,7 @@ class SingleChart extends React.Component {
             path: PropTypes.any
         };
     }
-  
+
     constructor(props) {
         super(props);
 
@@ -42,8 +42,13 @@ class SingleChart extends React.Component {
                     }
                 }]
             },
-            maintainAspectRatio: false,
-            responsive: false,
+            layout: {
+              padding: {
+                right: 50,
+                left: 50
+              }
+            },
+            maintainAspectRatio: true,
             legend: {
                 labels: {
                     fontColor: "white",
@@ -75,7 +80,7 @@ class SingleChart extends React.Component {
                     {this.props.title}
                 </header>
 
-                <Line data={this.data} ref={this.chartRef} options={this.options} width={window.innerWidth * 0.9} height={window.innerHeight * 0.3}/>
+                <Line data={this.data} ref={this.chartRef} options={this.options} width={500}/>
             </div>
         );
     }

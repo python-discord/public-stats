@@ -4,23 +4,27 @@ body {
 
 .App {
   color: #ffffff;
-  margin-top: 30px;
-  margin-left: 20px;
   line-height: 4em;
 }
 
 .App-jumbo {
+  margin-top: 30px;
+  margin-left: 20px;
   font-size: 4em;
   font-weight: bold;
 }
 
 .App-subtitle {
+  margin-top: 30px;
+  margin-left: 20px;
   font-size: 1em;
   font-weight: lighter;
   color: #99AAB5;
 }
 
 .Group-title {
+  margin-top: 30px;
+  margin-left: 20px;
   font-size: 2em;
   font-weight: bold;
 }

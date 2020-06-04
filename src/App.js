@@ -12,7 +12,7 @@ function App() {
             </header>
 
             <header className="App-subtitle">
-        Public statistics for the Python Discord server. All statistics are over a 30 day period. This site works best on desktop.
+        Public statistics for the Python Discord server. All statistics are over a 30 day period.
             </header>
 
             <div>
