@@ -1,0 +1,26 @@
+body {
+  background-color: #2C2F33;
+}
+
+.App {
+  color: #ffffff;
+  margin-top: 30px;
+  margin-left: 20px;
+  line-height: 4em;
+}
+
+.App-jumbo {
+  font-size: 4em;
+  font-weight: bold;
+}
+
+.App-subtitle {
+  font-size: 1em;
+  font-weight: lighter;
+  color: #99AAB5;
+}
+
+.Group-title {
+  font-size: 2em;
+  font-weight: bold;
+}
