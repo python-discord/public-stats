@@ -40,8 +40,8 @@ class App extends React.Component {
 
                 <div>
                     <SingleChart title="Member count" path="/members/total" color="#7289DA"/>
-                    <SingleChart title="Online members" path="/members/online" color="#77dd77"/>
-                    <SingleChart title="Message rate" path="/messages/rate" color="#7289DA"/>
+                    <SingleChart title="Online members" path="/members/online" color="#77dd77" subtitle="This graph does not take into account idle & do not disturb."/>
+                    <SingleChart title="Message rate" path="/messages/rate" color="#7289DA" subtitle="This graph shows messages sent per $interval"/>
                     <SingleChart title="In use help channels" path="/help/in_use" color="#7289DA" type="bar" beginAtZero={true}/>
 
                     <MultiChart title="Off topic messages" path="/messages/offtopic" color={

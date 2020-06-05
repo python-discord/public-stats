@@ -8,6 +8,10 @@ import timeFrameStore from "../stores/time_frame_store.js";
 import UNITS from "../constants.js";
 import CHART_HEIGHT from "../sizing.js";
 
+import moment from "moment";
+import momentDurationFormatSetup from "moment-duration-format";
+
+momentDurationFormatSetup(moment);
 
 
 class SingleChart extends React.Component {
@@ -17,12 +21,17 @@ class SingleChart extends React.Component {
             color: PropTypes.any,
             path: PropTypes.any,
             beginAtZero: PropTypes.any,
-            type: PropTypes.any
+            type: PropTypes.any,
+            subtitle: PropTypes.any
         };
     }
 
     constructor(props) {
         super(props);
+
+        this.state = {
+            formattedSubtitle: ""
+        };
 
         this.data = {
             datasets: [
@@ -89,7 +98,23 @@ class SingleChart extends React.Component {
             });
             self.chartRef.current.chartInstance.options.scales.xAxes[0].time.unit = UNITS[timeFrameStore.getState()];
             self.chartRef.current.chartInstance.update();
+            this.formatSubtitle();
         });
+    }
+
+    formatSubtitle() {
+        let interval = this.data.datasets[0].data[1].x - this.data.datasets[0].data[0].x;
+        let duration = moment.duration(interval, "milliseconds");
+
+        let formattedSubtitle = this.props.subtitle;
+
+        if (formattedSubtitle) {
+          formattedSubtitle = formattedSubtitle.replace("$interval", duration.format("h [hours] [and] mm [minutes]"));
+
+          this.setState({
+              formattedSubtitle
+          });
+        }
     }
 
     render() {
@@ -99,12 +124,24 @@ class SingleChart extends React.Component {
         } else {
             chart = <Line data={this.data} ref={this.chartRef} options={this.options} height={CHART_HEIGHT}/>;
         }
+
+        let subtitle;
+
+        if (this.props.subtitle) {
+            subtitle = (
+                <header className="Group-subtitle">
+                    {this.state.formattedSubtitle}
+                </header>
+            );
+        }
+
         return (
             <div className="App">
                 <header className="Group-title">
                     {this.props.title}
                 </header>
 
+                {subtitle}
 
                 {chart}
             </div>

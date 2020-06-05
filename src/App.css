@@ -29,6 +29,14 @@ body {
   font-weight: bold;
 }
 
+.Group-subtitle {
+  margin-top: 10px;
+  margin-left: 20px;
+  font-size: 1em;
+  padding-bottom: 10px;
+  color: #99AAB5;
+}
+
 .selectBox {
   width: 20%;
   margin-left: 20px;
