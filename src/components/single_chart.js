@@ -12,7 +12,9 @@ class SingleChart extends React.Component {
         return {
             title: PropTypes.any,
             color: PropTypes.any,
-            path: PropTypes.any
+            path: PropTypes.any,
+            beginAtZero: PropTypes.any,
+            type: PropTypes.any
         };
     }
 
@@ -75,7 +77,6 @@ class SingleChart extends React.Component {
         }
         let self = this;
         let path = this.props.path + "?frame=" + timeFrameStore.getState();
-        console.log(this.options)
         fetch(path).then(resp => resp.json()).then((data) => {
             this.data.datasets[0].data = data.map(x => {
                 return {
@@ -89,11 +90,11 @@ class SingleChart extends React.Component {
     }
 
     render() {
-      let chart;
+        let chart;
         if (this.props.type === "bar") {
-          chart = <Bar data={this.data} ref={this.chartRef} options={this.options} width={500}/>;
+            chart = <Bar data={this.data} ref={this.chartRef} options={this.options} width={500}/>;
         } else {
-          chart = <Line data={this.data} ref={this.chartRef} options={this.options} width={500}/>;
+            chart = <Line data={this.data} ref={this.chartRef} options={this.options} width={500}/>;
         }
         return (
             <div className="App">

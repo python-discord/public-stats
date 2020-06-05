@@ -31,7 +31,7 @@ class App extends React.Component {
                 </header>
 
                 <header className="App-subtitle">
-        Public statistics for the Python Discord server. All statistics are over a 30 day period.
+        Select a time period from the dropdown below!
                 </header>
 
                 <div className="selectBox">
