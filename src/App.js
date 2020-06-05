@@ -31,7 +31,7 @@ class App extends React.Component {
                 </header>
 
                 <header className="App-subtitle">
-        Select a time period from the dropdown below!
+        Select a time period from the dropdown below! All chart times are in your local timezone.
                 </header>
 
                 <div className="selectBox">
@@ -71,8 +71,6 @@ class App extends React.Component {
                             "Topical"
                         ]
                     } stacked={true}/>
-
-                    <SingleChart title="Average time in use" subtitle="Average time a help channel spends in use, averaged over a $interval period." timeOnY={true} path="/help/average_time" color="#7289DA" beginAtZero={true}/>
                 </div>
             </div>
         );

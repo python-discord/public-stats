@@ -8,7 +8,7 @@ import timeFrameStore from "../stores/time_frame_store.js";
 import UNITS from "../constants.js";
 import CHART_HEIGHT from "../sizing.js";
 
-import moment from "moment";
+import moment from "moment-timezone";
 import momentDurationFormatSetup from "moment-duration-format";
 
 momentDurationFormatSetup(moment);
@@ -60,16 +60,6 @@ class SingleChart extends React.Component {
                 yAxes: [{
                     ticks: {
                         min: props.beginAtZero ? 0: undefined,
-                    },
-                    type: this.props.timeOnY ? "time": undefined,
-                    time: {
-                        unit: "minute",
-                        displayFormats: {
-                            day: "",
-                            hour: "H [hour]",
-                            minute: "H[hr] m[min]"
-                        },
-                        tooltipFormat: "HH:mm",
                     }
                 }]
             },

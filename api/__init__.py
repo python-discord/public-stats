@@ -134,19 +134,3 @@ def help_in_use():
             },
         ).json()[0]["datapoints"]
     )
-
-
-@app.route("/help/average_time")
-def help_average_time():
-    """Return the statistics for a 30 day period on the total members."""
-    return jsonify(
-        httpx.get(
-            GRAPHITE_HOST,
-            params={
-                "target": "stats.timers.bot.help.in_use_time.mean",
-                "from": TIME_FRAMES[request.args.get("frame", "day")],
-                "format": "json",
-                "maxDataPoints": "300",
-            },
-        ).json()[0]["datapoints"]
-    )
