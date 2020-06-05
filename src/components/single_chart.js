@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import {Line} from "react-chartjs-2";
+import {Line, Bar} from "react-chartjs-2";
 
 import timeFrameStore from "../stores/time_frame_store.js";
 
@@ -24,10 +24,7 @@ class SingleChart extends React.Component {
                     fill: false,
                     backgroundColor: props.color,
                     borderColor: props.color,
-                    borderCapStyle: "butt",
-                    borderDash: [],
-                    borderDashOffset: 0.0,
-                    pointHitRadius: 20,
+                    pointHitRadius: 10,
                     borderJoinStyle: "miter",
                     pointRadius: 0,
                     data: []
@@ -41,6 +38,11 @@ class SingleChart extends React.Component {
                     type: "time",
                     time: {
                         unit: "day"
+                    }
+                }],
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: this.props.beginAtZero ? true : false
                     }
                 }]
             },
@@ -83,13 +85,20 @@ class SingleChart extends React.Component {
     }
 
     render() {
+      let chart;
+        if (this.props.type == "bar") {
+          chart = <Bar data={this.data} ref={this.chartRef} options={this.options} width={500}/>;
+        } else {
+          chart = <Line data={this.data} ref={this.chartRef} options={this.options} width={500}/>;
+        }
         return (
             <div className="App">
                 <header className="Group-title">
                     {this.props.title}
                 </header>
 
-                <Line data={this.data} ref={this.chartRef} options={this.options} width={500}/>
+
+                {chart}
             </div>
         );
     }

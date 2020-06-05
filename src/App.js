@@ -42,7 +42,7 @@ class App extends React.Component {
                     <SingleChart title="Member count" path="/members/total" color="#7289DA"/>
                     <SingleChart title="Online members" path="/members/online" color="#77dd77"/>
                     <SingleChart title="Message count" path="/messages/total" color="#7289DA"/>
-                    <SingleChart title="In use help channels" path="/help/in_use" color="#7289DA"/>
+                    <SingleChart title="In use help channels" path="/help/in_use" color="#7289DA" type="bar" beginAtZero={true}/>
 
                     <MultiChart title="Off topic messages" path="/messages/offtopic" color={
                         [
