@@ -1,6 +1,6 @@
 import { createStore } from "redux";
 
-function timeFrame(state = "day", action) {
+function timeFrame(state, action) {
     switch (action.type) {
     case "SET":
         return action.timeframe;
@@ -9,6 +9,11 @@ function timeFrame(state = "day", action) {
     }
 }
 
-let timeStore = createStore(timeFrame);
+
+let timeStore = createStore(timeFrame, localStorage.timeFrame ? localStorage.timeFrame : "day");
+
+timeStore.subscribe(() => {
+  localStorage.timeFrame = timeStore.getState()
+});
 
 export default timeStore;

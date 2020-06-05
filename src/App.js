@@ -35,7 +35,7 @@ class App extends React.Component {
                 </header>
 
                 <div className="selectBox">
-                    <Dropdown options={timeFrames} onChange={this.newTimeFrame} placeholder="Select a timeframe" value={timeFrames[0]}/>
+                    <Dropdown options={timeFrames} onChange={this.newTimeFrame} placeholder="Select a timeframe" value={localStorage.timeFrame ? localStorage.timeFrame : "day"}/>
                 </div>
 
                 <div>
