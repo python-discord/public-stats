@@ -67,7 +67,7 @@ class SingleChart extends React.Component {
                       displayFormats: {
                         day: '',
                         hour: 'H [hour]',
-                        minute: 'm [minutes]'
+                        minute: 'H[hr] m[min]'
                       },
                       tooltipFormat: 'HH:mm',
                     }
