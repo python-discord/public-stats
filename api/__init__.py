@@ -26,7 +26,7 @@ def members_total():
                 "target": "stats.gauges.bot.guild.total_members",
                 "from": TIME_FRAMES[request.args.get("frame", "-24h")],
                 "format": "json",
-                "maxDataPoints": "100",
+                "maxDataPoints": "300",
             },
         ).json()[0]["datapoints"]
     )
@@ -42,23 +42,23 @@ def online_total():
                 "target": "stats.gauges.bot.guild.status.online",
                 "from": TIME_FRAMES[request.args.get("frame", "-24h")],
                 "format": "json",
-                "maxDataPoints": "100",
+                "maxDataPoints": "300",
             },
         ).json()[0]["datapoints"]
     )
 
 
-@app.route("/messages/total")
+@app.route("/messages/rate")
 def message_total():
     """Return the statistics for a 30 day period on the total messages."""
     return jsonify(
         httpx.get(
             GRAPHITE_HOST,
             params={
-                "target": "integral(stats_counts.bot.messages)",
+                "target": "stats_counts.bot.messages",
                 "from": TIME_FRAMES[request.args.get("frame", "-24h")],
                 "format": "json",
-                "maxDataPoints": "100",
+                "maxDataPoints": "300",
             },
         ).json()[0]["datapoints"]
     )
@@ -76,7 +76,7 @@ def messages_offtopic():
                     "target": "keepLastValue(integral(stats_counts.bot.channels.off_topic_*), inf)",
                     "from": TIME_FRAMES[request.args.get("frame", "-24h")],
                     "format": "json",
-                    "maxDataPoints": "100",
+                    "maxDataPoints": "300",
                 },
             ).json()
         ]
@@ -95,7 +95,7 @@ def eval_perchannel():
                     "target": "keepLastValue(integral(stats_counts.bot.snekbox_usages.channels.*), inf)",
                     "from": TIME_FRAMES[request.args.get("frame", "-24h")],
                     "format": "json",
-                    "maxDataPoints": "100",
+                    "maxDataPoints": "300",
                 },
             ).json()
         ]
@@ -112,7 +112,7 @@ def help_in_use():
                 "target": "stats.gauges.bot.help.total.in_use",
                 "from": TIME_FRAMES[request.args.get("frame", "-24h")],
                 "format": "json",
-                "maxDataPoints": "100",
+                "maxDataPoints": "300",
             },
         ).json()[0]["datapoints"]
     )
