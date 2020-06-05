@@ -44,7 +44,7 @@ class App extends React.Component {
                     <SingleChart title="Message rate" path="/messages/rate" color="#7289DA" subtitle="This graph shows messages sent per $interval"/>
                     <SingleChart title="In use help channels" path="/help/in_use" color="#7289DA" type="bar" beginAtZero={true} subtitle="Average help channels in use per $interval"/>
 
-                    <MultiChart title="Off topic messages" path="/messages/offtopic" color={
+                    <MultiChart stacked={false} title="Off topic messages" path="/messages/offtopic" color={
                         [
                             "#ea907a",
                             "#fbc687",
@@ -58,7 +58,7 @@ class App extends React.Component {
                         ]
                     }/>
 
-                    <MultiChart title="Eval usage per channel" path="/evals/perchannel" color={
+                    <MultiChart stacked={false} title="Eval usage per channel" path="/evals/perchannel" color={
                         [
                             "#ea907a",
                             "#fbc687",
@@ -70,7 +70,9 @@ class App extends React.Component {
                             "Help",
                             "Topical"
                         ]
-                    }/>
+                    } stacked={true}/>
+
+                    <SingleChart title="Average time in use" subtitle="Average time a help channel spends in use, averaged over a $interval period." timeOnY={true} path="/help/average_time" color="#7289DA" beginAtZero={true}/>
                 </div>
             </div>
         );

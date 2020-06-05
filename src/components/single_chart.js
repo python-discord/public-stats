@@ -22,7 +22,8 @@ class SingleChart extends React.Component {
             path: PropTypes.any,
             beginAtZero: PropTypes.any,
             type: PropTypes.any,
-            subtitle: PropTypes.any
+            subtitle: PropTypes.any,
+            timeOnY: PropTypes.any
         };
     }
 
@@ -58,7 +59,17 @@ class SingleChart extends React.Component {
                 }],
                 yAxes: [{
                     ticks: {
-                        beginAtZero: this.props.beginAtZero ? true : false
+                        min: props.beginAtZero ? 0: undefined,
+                    },
+                    type: this.props.timeOnY ? 'time': undefined,
+                    time: {
+                      unit: 'minute',
+                      displayFormats: {
+                        day: '',
+                        hour: 'H [hour]',
+                        minute: 'm [minutes]'
+                      },
+                      tooltipFormat: 'HH:mm',
                     }
                 }]
             },

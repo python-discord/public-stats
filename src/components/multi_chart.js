@@ -14,7 +14,8 @@ class SingleChart extends React.Component {
             path: PropTypes.any,
             color: PropTypes.any,
             title: PropTypes.any,
-            names: PropTypes.any
+            names: PropTypes.any,
+            stacked: PropTypes.any
         };
     }
     constructor(props) {
@@ -31,6 +32,9 @@ class SingleChart extends React.Component {
                     time: {
                         unit: false
                     }
+                }],
+                yAxes: [{
+                  stacked: props.stacked
                 }]
             },
             maintainAspectRatio: true,
@@ -68,7 +72,7 @@ class SingleChart extends React.Component {
             this.data.datasets = data.map((v, i) => {
                 return {
                     label: this.props.names[i],
-                    fill: false,
+                    fill: this.props.stacked,
                     lineTension: 0.1,
                     backgroundColor: this.props.color[i],
                     borderColor: this.props.color[i],

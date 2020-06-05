@@ -10,6 +10,24 @@ GRAPHITE_HOST = (os.environ.get("GRAPHITE_HOST") or "http://graphite:80") + "/re
 
 TIME_FRAMES = {"day": "-24h", "week": "-1w", "month": "-1mon", "year": "-1y"}
 
+TOPICAL_CHANNELS = [
+    "async",
+    "computer_science",
+    "databases",
+    "data_science",
+    "discordpy",
+    "esoteric_python",
+    "game_developent",
+    "microcontrollers",
+    "networking",
+    "security",
+    "software_testing",
+    "tools_and_devops",
+    "unix",
+    "user_interfaces",
+    "web_development",
+]
+
 
 @app.route("/")
 def index():
@@ -24,7 +42,7 @@ def members_total():
             GRAPHITE_HOST,
             params={
                 "target": "stats.gauges.bot.guild.total_members",
-                "from": TIME_FRAMES[request.args.get("frame", "-24h")],
+                "from": TIME_FRAMES[request.args.get("frame", "day")],
                 "format": "json",
                 "maxDataPoints": "300",
             },
@@ -40,7 +58,7 @@ def online_total():
             GRAPHITE_HOST,
             params={
                 "target": "stats.gauges.bot.guild.status.online",
-                "from": TIME_FRAMES[request.args.get("frame", "-24h")],
+                "from": TIME_FRAMES[request.args.get("frame", "day")],
                 "format": "json",
                 "maxDataPoints": "300",
             },
@@ -56,7 +74,7 @@ def message_total():
             GRAPHITE_HOST,
             params={
                 "target": "stats_counts.bot.messages",
-                "from": TIME_FRAMES[request.args.get("frame", "-24h")],
+                "from": TIME_FRAMES[request.args.get("frame", "day")],
                 "format": "json",
                 "maxDataPoints": "300",
             },
@@ -74,7 +92,7 @@ def messages_offtopic():
                 GRAPHITE_HOST,
                 params={
                     "target": "keepLastValue(integral(stats_counts.bot.channels.off_topic_*), inf)",
-                    "from": TIME_FRAMES[request.args.get("frame", "-24h")],
+                    "from": TIME_FRAMES[request.args.get("frame", "day")],
                     "format": "json",
                     "maxDataPoints": "300",
                 },
@@ -93,7 +111,7 @@ def eval_perchannel():
                 GRAPHITE_HOST,
                 params={
                     "target": "keepLastValue(integral(stats_counts.bot.snekbox_usages.channels.*), inf)",
-                    "from": TIME_FRAMES[request.args.get("frame", "-24h")],
+                    "from": TIME_FRAMES[request.args.get("frame", "day")],
                     "format": "json",
                     "maxDataPoints": "300",
                 },
@@ -110,9 +128,25 @@ def help_in_use():
             GRAPHITE_HOST,
             params={
                 "target": "stats.gauges.bot.help.total.in_use",
-                "from": TIME_FRAMES[request.args.get("frame", "-24h")],
+                "from": TIME_FRAMES[request.args.get("frame", "day")],
                 "format": "json",
                 "maxDataPoints": "100",
+            },
+        ).json()[0]["datapoints"]
+    )
+
+
+@app.route("/help/average_time")
+def help_average_time():
+    """Return the statistics for a 30 day period on the total members."""
+    return jsonify(
+        httpx.get(
+            GRAPHITE_HOST,
+            params={
+                "target": "stats.timers.bot.help.in_use_time.mean",
+                "from": TIME_FRAMES[request.args.get("frame", "day")],
+                "format": "json",
+                "maxDataPoints": "300",
             },
         ).json()[0]["datapoints"]
     )
