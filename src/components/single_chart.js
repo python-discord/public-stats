@@ -3,6 +3,8 @@ import PropTypes from "prop-types";
 
 import {Line} from "react-chartjs-2";
 
+import timeFrameStore from "../stores/time_frame_store.js";
+
 class SingleChart extends React.Component {
     static get propTypes() {
         return {
@@ -43,10 +45,10 @@ class SingleChart extends React.Component {
                 }]
             },
             layout: {
-              padding: {
-                right: 50,
-                left: 50
-              }
+                padding: {
+                    right: 50,
+                    left: 50
+                }
             },
             maintainAspectRatio: true,
             legend: {
@@ -58,11 +60,18 @@ class SingleChart extends React.Component {
         };
 
         this.chartRef = React.createRef();
+
+        this.firstRun = true;
     }
 
     componentDidMount() {
+        if (this.firstRun) {
+            timeFrameStore.subscribe(() => this.componentDidMount());
+            this.firstRun = false;
+        }
         let self = this;
-        fetch(this.props.path).then(resp => resp.json()).then((data) => {
+        let path = this.props.path + "?frame=" + timeFrameStore.getState();
+        fetch(path).then(resp => resp.json()).then((data) => {
             this.data.datasets[0].data = data.map(x => {
                 return {
                     x: new Date(x[1] * 1000),
