@@ -58,7 +58,7 @@ class App extends React.Component {
                         ]
                     }/>
 
-                    <MultiChart stacked={false} title="Eval usage per channel" path="/evals/perchannel" color={
+                    <MultiChart title="Eval usage per channel" path="/evals/perchannel" color={
                         [
                             "#ea907a",
                             "#fbc687",
