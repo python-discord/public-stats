@@ -13,7 +13,7 @@ function timeFrame(state, action) {
 let timeStore = createStore(timeFrame, localStorage.timeFrame ? localStorage.timeFrame : "day");
 
 timeStore.subscribe(() => {
-  localStorage.timeFrame = timeStore.getState()
+    localStorage.timeFrame = timeStore.getState();
 });
 
 export default timeStore;

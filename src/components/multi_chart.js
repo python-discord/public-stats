@@ -6,6 +6,7 @@ import {Line} from "react-chartjs-2";
 import timeFrameStore from "../stores/time_frame_store.js";
 
 import UNITS from "../constants.js";
+import CHART_HEIGHT from "../sizing.js";
 
 class SingleChart extends React.Component {
     static get propTypes() {
@@ -97,7 +98,7 @@ class SingleChart extends React.Component {
                     {this.props.title}
                 </header>
 
-                <Line data={this.data} ref={this.chartRef} options={this.options} width={500}/>
+                <Line data={this.data} ref={this.chartRef} options={this.options} height={CHART_HEIGHT}/>
             </div>
         );
     }

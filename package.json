@@ -9,6 +9,7 @@
     "chart.js": "^2.9.3",
     "react": "^16.13.1",
     "react-chartjs-2": "^2.9.0",
+    "react-device-detect": "^1.12.1",
     "react-dom": "^16.13.1",
     "react-dropdown": "^1.7.0",
     "react-scripts": "3.4.1",
