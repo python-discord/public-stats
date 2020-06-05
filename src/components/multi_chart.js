@@ -34,7 +34,7 @@ class SingleChart extends React.Component {
                     }
                 }],
                 yAxes: [{
-                  stacked: props.stacked
+                    stacked: props.stacked
                 }]
             },
             maintainAspectRatio: true,

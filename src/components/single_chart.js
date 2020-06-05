@@ -61,15 +61,15 @@ class SingleChart extends React.Component {
                     ticks: {
                         min: props.beginAtZero ? 0: undefined,
                     },
-                    type: this.props.timeOnY ? 'time': undefined,
+                    type: this.props.timeOnY ? "time": undefined,
                     time: {
-                      unit: 'minute',
-                      displayFormats: {
-                        day: '',
-                        hour: 'H [hour]',
-                        minute: 'H[hr] m[min]'
-                      },
-                      tooltipFormat: 'HH:mm',
+                        unit: "minute",
+                        displayFormats: {
+                            day: "",
+                            hour: "H [hour]",
+                            minute: "H[hr] m[min]"
+                        },
+                        tooltipFormat: "HH:mm",
                     }
                 }]
             },
@@ -120,11 +120,11 @@ class SingleChart extends React.Component {
         let formattedSubtitle = this.props.subtitle;
 
         if (formattedSubtitle) {
-          formattedSubtitle = formattedSubtitle.replace("$interval", duration.format("d [days], h [hours] [and] mm [minutes]"));
+            formattedSubtitle = formattedSubtitle.replace("$interval", duration.format("d [days], h [hours] [and] mm [minutes]"));
 
-          this.setState({
-              formattedSubtitle
-          });
+            this.setState({
+                formattedSubtitle
+            });
         }
     }
 
