@@ -5,6 +5,8 @@ import {Line, Bar} from "react-chartjs-2";
 
 import timeFrameStore from "../stores/time_frame_store.js";
 
+import UNITS from "../constants.js";
+
 class SingleChart extends React.Component {
     static get propTypes() {
         return {
@@ -37,7 +39,7 @@ class SingleChart extends React.Component {
                 xAxes: [{
                     type: "time",
                     time: {
-                        unit: "day"
+                        unit: false
                     }
                 }],
                 yAxes: [{
@@ -73,6 +75,7 @@ class SingleChart extends React.Component {
         }
         let self = this;
         let path = this.props.path + "?frame=" + timeFrameStore.getState();
+        console.log(this.options)
         fetch(path).then(resp => resp.json()).then((data) => {
             this.data.datasets[0].data = data.map(x => {
                 return {
@@ -80,6 +83,7 @@ class SingleChart extends React.Component {
                     y: Math.round(x[0])
                 };
             });
+            self.chartRef.current.chartInstance.options.scales.xAxes[0].time.unit = UNITS[timeFrameStore.getState()];
             self.chartRef.current.chartInstance.update();
         });
     }
