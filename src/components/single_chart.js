@@ -109,7 +109,7 @@ class SingleChart extends React.Component {
         let formattedSubtitle = this.props.subtitle;
 
         if (formattedSubtitle) {
-          formattedSubtitle = formattedSubtitle.replace("$interval", duration.format("h [hours] [and] mm [minutes]"));
+          formattedSubtitle = formattedSubtitle.replace("$interval", duration.format("d [days], h [hours] [and] mm [minutes]"));
 
           this.setState({
               formattedSubtitle

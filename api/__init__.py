@@ -112,7 +112,7 @@ def help_in_use():
                 "target": "stats.gauges.bot.help.total.in_use",
                 "from": TIME_FRAMES[request.args.get("frame", "-24h")],
                 "format": "json",
-                "maxDataPoints": "300",
+                "maxDataPoints": "100",
             },
         ).json()[0]["datapoints"]
     )
