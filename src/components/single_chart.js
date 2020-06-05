@@ -86,7 +86,7 @@ class SingleChart extends React.Component {
 
     render() {
       let chart;
-        if (this.props.type == "bar") {
+        if (this.props.type === "bar") {
           chart = <Bar data={this.data} ref={this.chartRef} options={this.options} width={500}/>;
         } else {
           chart = <Line data={this.data} ref={this.chartRef} options={this.options} width={500}/>;
