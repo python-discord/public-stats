@@ -26,7 +26,7 @@ jobs:
       run: yarn build
 
     - name: Run eslint on JavaScript source
-      run: eslint src
+      run: yarn eslint src
 
   lint_python:
     runs-on: ubuntu-latest
