@@ -13,29 +13,32 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    
+
     - name: Setup Node.js environment
       uses: actions/setup-node@v1.4.2
       with:
         node-version: 12.x
-        
+
     - name: Install JavaScript dependencies
       run: yarn install
-    
+
     - name: Build React static files
       run: yarn build
-  
+
+    - name: Run eslint on JavaScript source
+      run: eslint src
+
   lint_python:
     runs-on: ubuntu-latest
-    
+
     steps:
       - uses: actions/checkout@v2
 
       - name: Setup Python
         uses: actions/setup-python@v2
-      
+
       - name: Install Flake8
         run: pip install flake8
-      
+
       - name: Lint with flake8
         run: flake8 api
