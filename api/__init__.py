@@ -91,7 +91,10 @@ def messages_offtopic():
             for x in httpx.get(
                 GRAPHITE_HOST,
                 params={
-                    "target": "keepLastValue(integral(stats_counts.bot.channels.off_topic_*), inf)",
+                    "target": (
+                        "keepLastValue(integral(stats_counts.bot.channels.off_topic_*)"
+                        ", inf)"
+                    ),
                     "from": TIME_FRAMES[request.args.get("frame", "day")],
                     "format": "json",
                     "maxDataPoints": "300",
@@ -110,7 +113,10 @@ def eval_perchannel():
             for x in httpx.get(
                 GRAPHITE_HOST,
                 params={
-                    "target": "keepLastValue(integral(stats_counts.bot.snekbox_usages.channels.*), inf)",
+                    "target": (
+                        "keepLastValue(integral(stats_counts.bot.snekbox_usages"
+                        ".channels.*), inf)"
+                    ),
                     "from": TIME_FRAMES[request.args.get("frame", "day")],
                     "format": "json",
                     "maxDataPoints": "300",
