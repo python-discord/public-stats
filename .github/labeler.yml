@@ -1,5 +1,8 @@
 javascript:
   - src/**/*
-  
+  - package.json
+  - yarn.lock
+
 python:
   - api/**/*
+  - requirements.txt
