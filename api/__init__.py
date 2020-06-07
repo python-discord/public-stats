@@ -12,7 +12,7 @@ GRAPHITE_HOST = (os.environ.get("GRAPHITE_HOST") or "http://graphite:80") + "/re
 
 
 TIME_FRAMES = {"day": "-24h", "week": "-1w", "month": "-1mon", "year": "-1y"}
-SUMMARIZE = {"day": "15minute", "week": "30minute", "month": "12hour", "year": "1day"}
+SUMMARIZE = {"day": "15minute", "week": "2hour", "month": "12hour", "year": "7day"}
 
 CACHE_THRESHOLD = 300
 CACHED = defaultdict(lambda: (datetime.fromtimestamp(0), None))
@@ -46,11 +46,11 @@ def cached(func):
 
 
 def single_graphite(
-    target: str, summarize: bool = True, sum_times: dict = SUMMARIZE
+    target: str, summarize: bool = True, sum_times: dict = SUMMARIZE, func: str = "avg"
 ) -> Response:
     if summarize:
         time = sum_times[request.args.get("frame", "day")]
-        target = f'summarize({target}, "{time}", "avg")'
+        target = f'summarize({target}, "{time}", "{func}")'
 
     return {
         "data": httpx.get(
@@ -66,11 +66,11 @@ def single_graphite(
 
 
 def multi_graphite(
-    target: str, summarize: bool = True, sum_times: dict = SUMMARIZE
+    target: str, summarize: bool = True, sum_times: dict = SUMMARIZE, func: str = "avg"
 ) -> Response:
     if summarize:
         time = sum_times[request.args.get("frame", "day")]
-        target = f'summarize({target}, "{time}", "avg")'
+        target = f'summarize({target}, "{time}", "{func}")'
 
     return {
         "data": [
@@ -118,7 +118,7 @@ def online_total():
 @cached
 def message_total():
     """Rate of messages over a time frame."""
-    return single_graphite("stats_counts.bot.messages")
+    return single_graphite("stats_counts.bot.messages", func="sum")
 
 
 @app.route("/messages/offtopic")
@@ -127,7 +127,7 @@ def messages_offtopic():
     """Cumulative off topic messages over a time frame."""
     custom_sum_times = {
         "day": "1hour",
-        "week": "6hour",
+        "week": "2hour",
         "month": "12hour",
         "year": "7day",
     }
@@ -142,7 +142,7 @@ def eval_perchannel():
     """Eval usage per channel over time."""
     custom_sum_times = {
         "day": "1hour",
-        "week": "6hour",
+        "week": "2hour",
         "month": "12hour",
         "year": "7day",
     }
