@@ -96,7 +96,6 @@ def add_header(response):
 
 
 @app.route("/")
-@cached
 def index():
     return app.send_static_file("index.html")
 
