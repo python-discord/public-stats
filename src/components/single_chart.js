@@ -43,7 +43,7 @@ class SingleChart extends React.Component {
                     borderColor: props.color,
                     pointHitRadius: 30,
                     barThickness: "flex",
-                    pointRadius: 0,
+                    pointRadius: 3,
                     data: []
                 }
             ]
@@ -75,6 +75,9 @@ class SingleChart extends React.Component {
                     fontColor: "white",
                     fontSize: 14
                 }
+            },
+            tooltips: {
+              mode: "index"
             }
         };
 

@@ -25,6 +25,7 @@ def single_graphite(
             params={
                 "target": target,
                 "from": TIME_FRAMES[request.args.get("frame", "day")],
+                "until": "-30minute",
                 "format": "json",
             },
         ).json()[0]["datapoints"]
@@ -46,6 +47,7 @@ def multi_graphite(
                 params={
                     "target": target,
                     "from": TIME_FRAMES[request.args.get("frame", "day")],
+                    "until": "-30minute",
                     "format": "json",
                 },
             ).json()
@@ -79,13 +81,30 @@ def message_total():
 @app.route("/messages/offtopic")
 def messages_offtopic():
     """Cumulative off topic messages over a time frame."""
-    return multi_graphite("integral(stats_counts.bot.channels.off_topic_*)")
+    custom_sum_times = {
+        "day": "1hour",
+        "week": "6hour",
+        "month": "12hour",
+        "year": "7day",
+    }
+    return multi_graphite(
+        "integral(stats_counts.bot.channels.off_topic_*)", sum_times=custom_sum_times
+    )
 
 
 @app.route("/evals/perchannel")
 def eval_perchannel():
     """Eval usage per channel over time."""
-    return multi_graphite("integral(stats_counts.bot.snekbox_usages.channels.*)")
+    custom_sum_times = {
+        "day": "1hour",
+        "week": "6hour",
+        "month": "12hour",
+        "year": "7day",
+    }
+    return multi_graphite(
+        "integral(stats_counts.bot.snekbox_usages.channels.*)",
+        sum_times=custom_sum_times,
+    )
 
 
 @app.route("/help/in_use")
