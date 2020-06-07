@@ -69,7 +69,7 @@ class SingleChart extends React.Component {
         let self = this;
         let path = this.props.path + "?frame=" + timeFrameStore.getState();
         fetch(path).then(resp => resp.json()).then((data) => {
-            this.data.datasets = data.map((v, i) => {
+            this.data.datasets = data["data"].map((v, i) => {
                 return {
                     label: this.props.names[i],
                     fill: this.props.stacked,

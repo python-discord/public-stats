@@ -94,7 +94,7 @@ class SingleChart extends React.Component {
         let self = this;
         let path = this.props.path + "?frame=" + timeFrameStore.getState();
         fetch(path).then(resp => resp.json()).then((data) => {
-            this.data.datasets[0].data = data.map(x => {
+            this.data.datasets[0].data = data["data"].map(x => {
                 return {
                     x: new Date(x[1] * 1000),
                     y: Math.round(x[0])
