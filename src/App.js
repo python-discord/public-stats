@@ -3,6 +3,7 @@ import "./App.css";
 
 import SingleChart from "./components/single_chart.js";
 import MultiChart from "./components/multi_chart.js";
+import Footer from "./components/footer.js";
 
 import Dropdown from "react-dropdown";
 import "react-dropdown/style.css";
@@ -70,6 +71,8 @@ class App extends React.Component {
                         "Topical"
                     ]
                 } stacked={true}/>
+
+                <Footer/>
             </div>
         );
     }
