@@ -77,7 +77,7 @@ class SingleChart extends React.Component {
                 }
             },
             tooltips: {
-              mode: "index"
+                mode: "index"
             }
         };
 
