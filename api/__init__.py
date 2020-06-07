@@ -16,7 +16,7 @@ GRAPHITE_HOST = (os.environ.get("GRAPHITE_HOST") or "http://graphite:80") + "/re
 TIME_FRAMES = {"day": "-24h", "week": "-1w", "month": "-1mon", "year": "-1y"}
 SUMMARIZE = {"day": "15minute", "week": "30minute", "month": "12hour", "year": "1day"}
 
-CACHE_THRESHOLD = 10
+CACHE_THRESHOLD = 300
 CACHED = defaultdict(lambda: (datetime.fromtimestamp(0), None))
 
 
