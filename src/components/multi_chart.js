@@ -76,11 +76,9 @@ class SingleChart extends React.Component {
                     lineTension: 0.1,
                     backgroundColor: this.props.color[i],
                     borderColor: this.props.color[i],
-                    borderCapStyle: "butt",
                     borderDash: [],
-                    pointHitRadius: 10,
+                    pointHitRadius: 30,
                     borderDashOffset: 0.0,
-                    borderJoinStyle: "miter",
                     pointRadius: 0,
                     data: v.map(x => {
                         return {

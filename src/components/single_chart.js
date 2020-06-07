@@ -41,8 +41,8 @@ class SingleChart extends React.Component {
                     fill: false,
                     backgroundColor: props.color,
                     borderColor: props.color,
-                    pointHitRadius: 10,
-                    borderJoinStyle: "miter",
+                    pointHitRadius: 30,
+                    barThickness: "flex",
                     pointRadius: 0,
                     data: []
                 }
@@ -110,7 +110,10 @@ class SingleChart extends React.Component {
         let formattedSubtitle = this.props.subtitle;
 
         if (formattedSubtitle) {
-            formattedSubtitle = formattedSubtitle.replace("$interval", duration.format("d [days], h [hours] [and] mm [minutes]"));
+            formattedSubtitle = formattedSubtitle.replace("$interval", duration.format({
+                template: "d [days], h [hours], mm [minutes]",
+                trim: "both"
+            }));
 
             this.setState({
                 formattedSubtitle
