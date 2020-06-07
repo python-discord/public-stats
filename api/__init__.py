@@ -1,7 +1,7 @@
 import os
 
 import httpx
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, Response, request
 
 app = Flask(__name__, static_folder="../build", static_url_path="/")
 
@@ -9,24 +9,48 @@ GRAPHITE_HOST = (os.environ.get("GRAPHITE_HOST") or "http://graphite:80") + "/re
 
 
 TIME_FRAMES = {"day": "-24h", "week": "-1w", "month": "-1mon", "year": "-1y"}
+SUMMARIZE = {"day": "15minute", "week": "30minute", "month": "12hour", "year": "1day"}
 
-TOPICAL_CHANNELS = [
-    "async",
-    "computer_science",
-    "databases",
-    "data_science",
-    "discordpy",
-    "esoteric_python",
-    "game_developent",
-    "microcontrollers",
-    "networking",
-    "security",
-    "software_testing",
-    "tools_and_devops",
-    "unix",
-    "user_interfaces",
-    "web_development",
-]
+
+def single_graphite(
+    target: str, summarize: bool = True, sum_times: dict = SUMMARIZE
+) -> Response:
+    if summarize:
+        time = sum_times[request.args.get("frame", "day")]
+        target = f'summarize({target}, "{time}", "avg")'
+
+    return jsonify(
+        httpx.get(
+            GRAPHITE_HOST,
+            params={
+                "target": target,
+                "from": TIME_FRAMES[request.args.get("frame", "day")],
+                "format": "json",
+            },
+        ).json()[0]["datapoints"]
+    )
+
+
+def multi_graphite(
+    target: str, summarize: bool = True, sum_times: dict = SUMMARIZE
+) -> Response:
+    if summarize:
+        time = sum_times[request.args.get("frame", "day")]
+        target = f'summarize({target}, "{time}", "avg")'
+
+    return jsonify(
+        [
+            x["datapoints"]
+            for x in httpx.get(
+                GRAPHITE_HOST,
+                params={
+                    "target": target,
+                    "from": TIME_FRAMES[request.args.get("frame", "day")],
+                    "format": "json",
+                },
+            ).json()
+        ]
+    )
 
 
 @app.route("/")
@@ -36,107 +60,45 @@ def index():
 
 @app.route("/members/total")
 def members_total():
-    """Return the statistics for a 30 day period on the total members."""
-    return jsonify(
-        httpx.get(
-            GRAPHITE_HOST,
-            params={
-                "target": "stats.gauges.bot.guild.total_members",
-                "from": TIME_FRAMES[request.args.get("frame", "day")],
-                "format": "json",
-                "maxDataPoints": "300",
-            },
-        ).json()[0]["datapoints"]
-    )
+    """Total member count statistic."""
+    return single_graphite("stats.gauges.bot.guild.total_members")
 
 
 @app.route("/members/online")
 def online_total():
-    """Return the online members for a 30 day period."""
-    return jsonify(
-        httpx.get(
-            GRAPHITE_HOST,
-            params={
-                "target": "stats.gauges.bot.guild.status.online",
-                "from": TIME_FRAMES[request.args.get("frame", "day")],
-                "format": "json",
-                "maxDataPoints": "300",
-            },
-        ).json()[0]["datapoints"]
-    )
+    """Average online members over time."""
+    return single_graphite("stats.gauges.bot.guild.status.online")
 
 
 @app.route("/messages/rate")
 def message_total():
-    """Return the statistics for a 30 day period on the total messages."""
-    return jsonify(
-        httpx.get(
-            GRAPHITE_HOST,
-            params={
-                "target": "stats_counts.bot.messages",
-                "from": TIME_FRAMES[request.args.get("frame", "day")],
-                "format": "json",
-                "maxDataPoints": "300",
-            },
-        ).json()[0]["datapoints"]
-    )
+    """Rate of messages over a time frame."""
+    return single_graphite("stats_counts.bot.messages")
 
 
 @app.route("/messages/offtopic")
 def messages_offtopic():
-    """Return the statistics for a 30 day period on the total messages in off topic."""
-    return jsonify(
-        [
-            x["datapoints"]
-            for x in httpx.get(
-                GRAPHITE_HOST,
-                params={
-                    "target": (
-                        "keepLastValue(integral(stats_counts.bot.channels.off_topic_*)"
-                        ", inf)"
-                    ),
-                    "from": TIME_FRAMES[request.args.get("frame", "day")],
-                    "format": "json",
-                    "maxDataPoints": "300",
-                },
-            ).json()
-        ]
-    )
+    """Cumulative off topic messages over a time frame."""
+    return multi_graphite("integral(stats_counts.bot.channels.off_topic_*)")
 
 
 @app.route("/evals/perchannel")
 def eval_perchannel():
-    """Return the statistics for a 30 day period on the eval usage locations."""
-    return jsonify(
-        [
-            x["datapoints"]
-            for x in httpx.get(
-                GRAPHITE_HOST,
-                params={
-                    "target": (
-                        "keepLastValue(integral(stats_counts.bot.snekbox_usages"
-                        ".channels.*), inf)"
-                    ),
-                    "from": TIME_FRAMES[request.args.get("frame", "day")],
-                    "format": "json",
-                    "maxDataPoints": "300",
-                },
-            ).json()
-        ]
-    )
+    """Eval usage per channel over time."""
+    return multi_graphite("integral(stats_counts.bot.snekbox_usages.channels.*)")
 
 
 @app.route("/help/in_use")
 def help_in_use():
-    """Return the statistics for a 30 day period on the total members."""
-    return jsonify(
-        httpx.get(
-            GRAPHITE_HOST,
-            params={
-                "target": "stats.gauges.bot.help.total.in_use",
-                "from": TIME_FRAMES[request.args.get("frame", "day")],
-                "format": "json",
-                "maxDataPoints": "100",
-            },
-        ).json()[0]["datapoints"]
+    """Average in use help channels over a time frame."""
+    # We want less data points for in use help
+    custom_sum_times = {
+        "day": "1hour",
+        "week": "12hour",
+        "month": "1day",
+        "year": "7day",
+    }
+
+    return single_graphite(
+        "stats.gauges.bot.help.total.in_use", sum_times=custom_sum_times
     )
