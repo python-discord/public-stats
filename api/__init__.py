@@ -111,7 +111,7 @@ def members_total():
 @cached
 def online_total():
     """Average online members over time."""
-    return single_graphite("stats.gauges.bot.guild.status.online")
+    return single_graphite("sumSeries(stats.gauges.bot.guild.status.{online,idle,do_not_disturb})")
 
 
 @app.route("/messages/rate")
