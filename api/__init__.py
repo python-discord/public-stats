@@ -45,6 +45,10 @@ def cached(func):
     return wrapped
 
 
+def valid_datapoints(d):
+    return d[0] is None or d[1] is None
+
+
 def single_graphite(
     target: str, summarize: bool = True, sum_times: dict = SUMMARIZE, func: str = "avg"
 ) -> Response:
@@ -53,7 +57,7 @@ def single_graphite(
         target = f'summarize({target}, "{time}", "{func}")'
 
     return {
-        "data": httpx.get(
+        "data": filter(valid_datapoints, httpx.get(
             GRAPHITE_HOST,
             params={
                 "target": target,
@@ -61,7 +65,7 @@ def single_graphite(
                 "until": "-30minute",
                 "format": "json",
             },
-        ).json()[0]["datapoints"]
+        ).json()[0]["datapoints"])
     }
 
 
@@ -74,7 +78,7 @@ def multi_graphite(
 
     return {
         "data": [
-            x["datapoints"]
+            filter(valid_datapoints, x["datapoints"])
             for x in httpx.get(
                 GRAPHITE_HOST,
                 params={
