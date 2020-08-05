@@ -57,7 +57,7 @@ def single_graphite(
         target = f'summarize({target}, "{time}", "{func}")'
 
     return {
-        "data": filter(valid_datapoints, httpx.get(
+        "data": list(filter(valid_datapoints, httpx.get(
             GRAPHITE_HOST,
             params={
                 "target": target,
@@ -65,7 +65,7 @@ def single_graphite(
                 "until": "-30minute",
                 "format": "json",
             },
-        ).json()[0]["datapoints"])
+        ).json()[0]["datapoints"]))
     }
 
 
@@ -78,7 +78,7 @@ def multi_graphite(
 
     return {
         "data": [
-            filter(valid_datapoints, x["datapoints"])
+            list(filter(valid_datapoints, x["datapoints"]))
             for x in httpx.get(
                 GRAPHITE_HOST,
                 params={
