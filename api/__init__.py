@@ -46,7 +46,7 @@ def cached(func):
 
 
 def valid_datapoints(d):
-    return d[0] is None or d[1] is None
+    return d[0] is not None and d[1] is not None
 
 
 def single_graphite(
