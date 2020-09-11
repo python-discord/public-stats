@@ -62,7 +62,7 @@ def single_graphite(
             params={
                 "target": target,
                 "from": TIME_FRAMES[request.args.get("frame", "day")],
-                "until": "-30minute",
+                "until": "now",
                 "format": "json",
             },
         ).json()[0]["datapoints"]))
@@ -84,7 +84,7 @@ def multi_graphite(
                 params={
                     "target": target,
                     "from": TIME_FRAMES[request.args.get("frame", "day")],
-                    "until": "-30minute",
+                    "until": "now",
                     "format": "json",
                 },
             ).json()
