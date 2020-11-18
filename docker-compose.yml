@@ -1,0 +1,20 @@
+version: "3.7"
+services:
+  graphite:
+    container_name: public-stats-graphite
+    image: graphiteapp/graphite-statsd:latest
+    ports:
+      - 8899:80
+      - 8125:8125
+  public-stats:
+    depends_on:
+      - graphite
+    container_name: public-stats
+    image: ghcr.io/python-discord/public-stats:latest
+    ports:
+     - 8898:8000
+    environment:
+      - GRAPHITE_HOST=public-stats-graphite
+    build:
+      context: .
+      dockerfile: Dockerfile
