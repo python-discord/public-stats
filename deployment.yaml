@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: public-stats
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: public-stats
+  template:
+    metadata:
+      labels:
+        app: public-stats
+    spec:
+      containers:
+        - name: public-stats
+          image: ghcr.io/python-discord/public-stats:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8000
