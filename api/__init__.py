@@ -8,7 +8,10 @@ from flask import Flask, make_response, Response, request
 
 app = Flask(__name__, static_folder="../build", static_url_path="/")
 
-GRAPHITE_HOST = (os.environ.get("GRAPHITE_HOST") or "http://graphite:80") + "/render"
+GRAPHITE_HOST = (
+    os.environ.get("GRAPHITE_HOST") or
+    "http://graphite.default.svc.cluster.local:80"
+) + "/render"
 
 
 TIME_FRAMES = {"day": "-24h", "week": "-1w", "month": "-1mon", "year": "-1y"}
