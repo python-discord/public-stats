@@ -39,6 +39,7 @@ jobs:
           file: ./Dockerfile
           push: true
           cache-from: type=registry,ref=ghcr.io/python-discord/public-stats:latest
+          cache-to: type=inline
           tags: |
             ghcr.io/python-discord/public-stats:latest
             ghcr.io/python-discord/public-stats:${{ steps.sha_tag.outputs.tag }}
