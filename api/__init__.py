@@ -174,5 +174,5 @@ def help_in_use():
 def help_claimed():
     """Cumulative help channel claims over a time frame."""
     return single_graphite(
-        "integral(stats_counts.bot.channels.off_topic_*)", summarize=False
+        "integral(stats_counts.bot.help.claimed)"
     )
