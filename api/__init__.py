@@ -173,12 +173,6 @@ def help_in_use():
 @cached
 def help_claimed():
     """Cumulative help channel claims over a time frame."""
-    custom_sum_times = {
-        "day": "1hour",
-        "week": "2hour",
-        "month": "12hour",
-        "year": "7day",
-    }
     return single_graphite(
         "integral(stats_counts.bot.channels.off_topic_*)", summarize=False
     )
