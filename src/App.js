@@ -41,7 +41,7 @@ class App extends React.Component {
 
                 <SingleChart title="Member count" path="/members/total" color="#7289DA"/>
                 <SingleChart title="Message rate" path="/messages/rate" color="#7289DA" subtitle="This graph shows messages sent per $interval"/>
-                <SingleChart title="Help channel claims" path="/help/claimed" color="#7289DA"/>
+                <SingleChart title="Help channel claims" path="/help/claimed" color="#7289DA" subtitle="This graph shows the number of help channels claimed every $interval"/>
                 <SingleChart title="In use help channels" path="/help/in_use" color="#7289DA" type="bar" beginAtZero={true} subtitle="Average help channels in use per $interval"/>
 
                 <MultiChart stacked={false} title="Off topic messages" path="/messages/offtopic" color={
