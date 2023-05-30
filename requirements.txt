@@ -12,7 +12,7 @@ httpx==0.13.3
 hyperframe==5.2.0
 idna==2.9
 itsdangerous==2.1.2
-Jinja2==2.11.3
+Jinja2==3.1.2
 MarkupSafe==1.1.1
 rfc3986==1.4.0
 sniffio==1.1.0
